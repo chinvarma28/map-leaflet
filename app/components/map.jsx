@@ -1,36 +1,29 @@
-"use client";
 
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
-import { useState } from "react";
-import L, { icon } from "leaflet";
+"use client"
 
-const customIcon = new L.Icon({
-  iconUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-});
-
-const markers = [
-  { position: [28.6139, 77.209], label: "New Delhi" },
-  { position: [19.076, 72.8777], label: "Mumbai" },
-  { position: [13.0827, 80.2707], label: "Chennai" },
-  { position: [22.5726, 88.3639], label: "Kolkata" },
-  { position: [12.9716, 77.5946], label: "Bangalore" },
-];
+import L, { icon } from "leaflet"
+import { useState } from "react"
+import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet"
 
 function CenterMap({ position }) {
-  const map = useMap();
-  map.setView(position, map.getZoom());
-  return null;
+  const map = useMap()
+  map.setView(position, map.getZoom())
+  return null
 }
 
-export default function MapWithMarkers() {
-  const [selectedPosition, setSelectedPosition] = useState(null);
+export default function MapWithMarkers({ markers }) {
+  const [selectedPosition, setSelectedPosition] = useState(null)
   markers.map((m) => {
-    L.marker(m.position[0], m.position[1]);
-  });
+    L.marker(m.position[0], m.position[1])
+  })
+
+  const customIcon = new L.Icon({
+    iconUrl:
+      "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+  })
 
   return (
     <MapContainer
@@ -49,7 +42,7 @@ export default function MapWithMarkers() {
           icon={customIcon}
           eventHandlers={{
             click: () => {
-              setSelectedPosition(marker.position);
+              setSelectedPosition(marker.position)
             },
           }}
         >
@@ -62,5 +55,6 @@ export default function MapWithMarkers() {
       ))}
       {selectedPosition && <CenterMap position={selectedPosition} />}
     </MapContainer>
-  );
+  )
 }
+
